@@ -1,1 +1,1 @@
-# FarsiDigitHandwrite
+# Farsi Digit Handwrite Recognition
