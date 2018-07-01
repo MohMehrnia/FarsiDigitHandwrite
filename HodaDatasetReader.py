@@ -1,16 +1,3 @@
-# *-* coding: utf-8 *-*
-
-# Hoda Dataset Reader
-# Python code for reading Hoda farsi digit dataset.
-
-# Hoda Farsi Digit Dataset:
-# http://farsiocr.ir/
-# http://farsiocr.ir/مجموعه-داده/مجموعه-ارقام-دستنویس-هدی
-# http://dadegan.ir/catalog/hoda
-
-# Repository:
-# https://github.com/amir-saniyan/HodaDatasetReader
-
 import struct
 import numpy as np
 import cv2

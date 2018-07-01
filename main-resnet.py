@@ -38,7 +38,7 @@ print()
 print('Begin Deep Learning Process (Simple Deep Learning')
 
 
-NB_EPOCH = 10
+NB_EPOCH = 100
 BATCH_SIZE = 128
 VERBOSE = 1
 NB_CLASSES = 10
@@ -48,11 +48,11 @@ VALIDATION_SPLIT = 0.2
 RESHAPE = 784
 DROPOUT = 0.2
 IMG_ROW, IMG_COL = 28, 28
-INPUT_SHAPE = (1, IMG_ROW, IMG_COL)
+INPUT_SHAPE = (IMG_ROW, IMG_COL, 1)
 
-K.set_image_dim_ordering("th")
-X_train = X_train.reshape(60000, 1, 28, 28)
-X_test = X_test.reshape(20000, 1, 28, 28)
+# K.set_image_dim_ordering("th")
+X_train = X_train.reshape(60000, 28, 28, 1)
+X_test = X_test.reshape(20000, 28, 28, 1)
 
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
@@ -70,16 +70,16 @@ model = Sequential()
 input_img = Input(INPUT_SHAPE, name='input_layer')
 zeroPad1 = ZeroPadding2D((1,1), name='zeroPad1')
 zeroPad1_2 = ZeroPadding2D((1,1), name='zeroPad1_2')
-layer1 = Conv2D(6, 3, 3, subsample=(2, 2), kernel_initializer='he_uniform', name='major_conv')
-layer1_2 = Conv2D(16, 3, 3, subsample=(2, 2), kernel_initializer='he_uniform', name='major_conv2')
+layer1 = Conv2D(6, (3, 3), strides=(2, 2), kernel_initializer='he_uniform', name='major_conv')
+layer1_2 = Conv2D(16, (3, 3), strides=(2, 2), kernel_initializer='he_uniform', name='major_conv2')
 zeroPad2 = ZeroPadding2D((1,1), name='zeroPad2')
 zeroPad2_2 = ZeroPadding2D((1,1), name='zeroPad2_2')
-layer2 = Conv2D(6, 3, 3, subsample=(1,1), kernel_initializer='he_uniform', name='l1_conv')
-layer2_2 = Conv2D(16, 3, 3, subsample=(1,1), kernel_initializer='he_uniform', name='l1_conv2')
+layer2 = Conv2D(6, (3, 3), strides=(1,1), kernel_initializer='he_uniform', name='l1_conv')
+layer2_2 = Conv2D(16, (3, 3), strides=(1,1), kernel_initializer='he_uniform', name='l1_conv2')
 zeroPad3 = ZeroPadding2D((1,1), name='zeroPad3')
 zeroPad3_2 = ZeroPadding2D((1,1), name='zeroPad3_2')
-layer3 = Conv2D(6, 3, 3, subsample=(1, 1), kernel_initializer='he_uniform', name='l2_conv')
-layer3_2 = Conv2D(16, 3, 3, subsample=(1, 1), kernel_initializer='he_uniform', name='l2_conv2')
+layer3 = Conv2D(6, (3, 3), strides=(1, 1), kernel_initializer='he_uniform', name='l2_conv')
+layer3_2 = Conv2D(16, (3, 3), strides=(1, 1), kernel_initializer='he_uniform', name='l2_conv2')
 layer4 = Dense(64, activation='relu', kernel_initializer='he_uniform', name='dense1')
 layer5 = Dense(16, activation='relu', kernel_initializer='he_uniform', name='dense2')
 final = Dense(10, activation='softmax', kernel_initializer='he_uniform', name='classifier')
@@ -116,7 +116,7 @@ res2 = Dropout(0.4, name='dropout1')(res2)
 res2 = layer5(res2)
 res2 = Dropout(0.4, name='dropout2')(res2)
 res2 = final(res2)
-model = Model(input=input_img, output=res2)
+model = Model(inputs=[input_img], outputs=[res2])
 model.summary()
 
 model.compile(loss='categorical_crossentropy', optimizer=OPTIMIZER, metrics=['accuracy'])
