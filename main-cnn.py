@@ -3,10 +3,12 @@ from matplotlib import pyplot as plt
 from HodaDatasetReader import read_hoda_cdb, read_hoda_dataset
 from keras.datasets import mnist
 from keras.models import Sequential
-from keras.layers.core import Dense, Activation, Dropout, Flatten
-from keras.layers.convolutional import Conv2D, MaxPooling2D, Convolution2D
+from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.optimizers import Adam
+from keras.layers.normalization import BatchNormalization
 from keras.utils import np_utils
+from keras.layers import Conv2D, MaxPooling2D, ZeroPadding2D, GlobalAveragePooling2D
+from keras.layers.advanced_activations import LeakyReLU 
 from keras import backend as K
 import numpy as np
 import matplotlib.pyplot as plt
@@ -64,16 +66,26 @@ Y_train = np_utils.to_categorical(Y_train, NB_CLASSES)
 Y_test = np_utils.to_categorical(Y_test, NB_CLASSES)
 
 model = Sequential()
-model.add(Conv2D(20, kernel_size=5, border_mode="same", input_shape=INPUT_SHAPE))
+model.add(Conv2D(32, (3, 3), input_shape=INPUT_SHAPE))
+model.add(BatchNormalization(axis=-1))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Conv2D(50, kernel_size=5, border_mode='same'))
+model.add(Conv2D(32, (3, 3)))
+model.add(BatchNormalization(axis=-1))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(MaxPooling2D(pool_size=(2,2)))
+model.add(Conv2D(64,(3, 3)))
+model.add(BatchNormalization(axis=-1))
+model.add(Activation('relu'))
+model.add(Conv2D(64, (3, 3)))
+model.add(BatchNormalization(axis=-1))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2,2)))
 model.add(Flatten())
 model.add(Dense(512))
+model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Dense(NB_CLASSES))
+model.add(Dropout(0.2))
+model.add(Dense(10))
 model.add(Activation('softmax'))
 model.summary()
 
@@ -84,19 +96,3 @@ score = model.evaluate(X_test, Y_test, verbose=VERBOSE)
 print('Test Score:', score[0])
 print('Test accuracy:', score[1])
 
-# print(history.history.keys())
-# plt.plot(history.history['acc'])
-# plt.plot(history.history['val_acc'])
-# plt.title('model accuracy')
-# plt.ylabel('accuracy')
-# plt.xlabel('epoch')
-# plt.legend(['train', 'test'], loc='upper left')
-# plt.show()
-
-# plt.plot(history.history['loss'])
-# plt.plot(history.history['val_loss'])
-# plt.title('model loss')
-# plt.ylabel('loss')
-# plt.xlabel('epoch')
-# plt.legend(['train', 'test'], loc='upper left')
-# plt.show()
