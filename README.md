@@ -4,4 +4,4 @@
 ### Simple Model (main.py) : 97 %
 ### LeNet Model (main-LesNet) : 98%
 ### ResNet Model (main-resnet) : 98.26%
-### cnn Model (main-cnn) : 
+### My Custom cnn Model (main-cnn) : 

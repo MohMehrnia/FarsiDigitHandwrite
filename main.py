@@ -32,7 +32,7 @@ print()
 print('Begin Deep Learning Process (Simple Deep Learning')
 
 
-NB_EPOCH = 300
+NB_EPOCH = 10
 BATCH_SIZE = 128
 VERBOSE = 1
 NB_CLASSES = 10
