@@ -38,7 +38,7 @@ print()
 print('Begin Deep Learning Process (Simple Deep Learning')
 
 
-NB_EPOCH = 100
+NB_EPOCH = 250
 BATCH_SIZE = 128
 VERBOSE = 1
 NB_CLASSES = 10
@@ -48,11 +48,11 @@ VALIDATION_SPLIT = 0.2
 RESHAPE = 784
 DROPOUT = 0.2
 IMG_ROW, IMG_COL = 28, 28
-INPUT_SHAPE = (IMG_ROW, IMG_COL, 1)
+INPUT_SHAPE = (1, IMG_ROW, IMG_COL)
 
 # K.set_image_dim_ordering("th")
-X_train = X_train.reshape(60000, 28, 28, 1)
-X_test = X_test.reshape(20000, 28, 28, 1)
+X_train = X_train.reshape(60000, 1, IMG_ROW, IMG_COL)
+X_test = X_test.reshape(20000, 1, IMG_ROW, IMG_COL)
 
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
