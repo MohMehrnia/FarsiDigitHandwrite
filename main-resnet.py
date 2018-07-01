@@ -46,7 +46,7 @@ OPTIMIZER = Adam()
 N_HIDDEN = 128
 VALIDATION_SPLIT = 0.2
 RESHAPE = 784
-DROPOUT = 0.2
+DROPOUT = 0.4
 IMG_ROW, IMG_COL = 28, 28
 INPUT_SHAPE = (1, IMG_ROW, IMG_COL)
 
@@ -112,9 +112,9 @@ res2 =  keras.layers.Add()([third2, second2])
 res2 = Flatten()(res2)
 
 res2 = layer4(res2)
-res2 = Dropout(0.4, name='dropout1')(res2)
+res2 = Dropout(DROPOUT, name='dropout1')(res2)
 res2 = layer5(res2)
-res2 = Dropout(0.4, name='dropout2')(res2)
+res2 = Dropout(DROPOUT, name='dropout2')(res2)
 res2 = final(res2)
 model = Model(inputs=[input_img], outputs=[res2])
 model.summary()
